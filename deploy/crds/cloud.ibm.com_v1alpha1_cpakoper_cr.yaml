@@ -1,0 +1,11 @@
+apiVersion: cloud.ibm.com/v1alpha1
+kind: CpakOper
+metadata:
+  name: cp4application
+spec:
+  cptype: cp4application
+  cpversion: 4.0.1
+  cpfeatures:
+    - transadv
+    - knative
+    - kabanero

@@ -1,0 +1,61 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: cpakopers.cloud.ibm.com
+spec:
+  group: cloud.ibm.com
+  names:
+    kind: CpakOper
+    listKind: CpakOperList
+    plural: cpakopers
+    singular: cpakoper
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: CpakOper is the Schema for the CloudPak Manager Operator API
+      required: ["spec"]
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: CpakOperSpec defines the CloudPak types and version lifecycle manager
+          required: ["cptype", "cpversion"]
+          properties:
+            cptype:
+              type: "string"
+              minimum: 1
+              maximum: 1
+            cpversion:
+              type: "string"
+              minimum: 1
+              maximum: 1
+            cpfeatures:
+              type: "string"
+          type: object
+        status:
+          description: CpakOperStatus defines the observed state of CpakOper
+          type: object
+          properties:
+            installedFeatures:
+              type: "string"
+            clusterStatus:
+              type: "string"
+              maximum: 1
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
