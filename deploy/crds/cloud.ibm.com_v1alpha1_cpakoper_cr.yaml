@@ -5,7 +5,3 @@ metadata:
 spec:
   cptype: cp4application
   cpversion: 4.0.1
-  cpfeatures:
-    - transadv
-    - knative
-    - kabanero

@@ -125,7 +125,7 @@ func (r *ReconcileCpakOper) Reconcile(request reconcile.Request) (reconcile.Resu
 	}
 
 	// Pod already exists - don't requeue
-	reqLogger.Info("Skip reconcile: Pod already exists", "Pod.Namespace", found.Namespace, "Pod.Name", found.Name)
+	reqLogger.Info("Finish reconcile: re-initiate pods", "Pod.Namespace", found.Namespace, "Pod.Name", found.Name)
 	return reconcile.Result{}, nil
 }
 
@@ -143,9 +143,9 @@ func newPodForCR(cr *cloudv1alpha1.CpakOper) *corev1.Pod {
 		Spec: corev1.PodSpec{
 			Containers: []corev1.Container{
 				{
-					Name:    "busybox",
-					Image:   "busybox",
-					Command: []string{"sleep", "3600"},
+					Name:    cr.Spec.CPType,
+					Image:   "ibmcloudarchitecture/" + cr.Spec.CPType + ":" + cr.Spec.CPVersion,
+					Command: []string{"runCpakMgr", cr.Spec.CPType, cr.Spec.CPVersion},
 				},
 			},
 		},
